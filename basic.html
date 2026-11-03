@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA LABS — Indian Skincare Elevated</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf5ec;--ink:#2a1d14;--muted:#7a6a5c;--gold:#b8863b;--green:#2f4a3a;--card:#fff;--line:#e8dccb}
+@media(prefers-color-scheme:dark){:root{--bg:#17110c;--ink:#f3e9da;--muted:#b3a290;--gold:#d9a54f;--green:#8fb59c;--card:#241a13;--line:#3a2c20}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.1}
+em{color:var(--gold)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:16px 5vw;background:var(--bg);border-bottom:1px solid var(--line)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;letter-spacing:.2em;font-weight:600}
+.navr{display:flex;gap:28px;align-items:center}
+.cartbtn{background:var(--green);color:var(--bg);border:0;border-radius:99px;padding:8px 16px}
+.tag{color:var(--gold);font-size:.85rem;letter-spacing:.1em}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:5vw;align-items:center;padding:8vh 5vw;min-height:80vh}
+.hero h1{font-size:clamp(2.8rem,6vw,5.2rem);margin:14px 0 18px}
+.hero p{color:var(--muted);max-width:46ch;margin-bottom:28px}
+.btn{display:inline-block;background:var(--green);color:var(--bg);padding:13px 26px;border-radius:99px;border:0;margin-right:10px}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
+.imgs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.imgs img{width:100%;border-radius:18px;object-fit:cover}
+.imgs img:first-child{grid-column:1/3;height:260px}
+.imgs img:not(:first-child){height:200px}
+section{padding:9vh 5vw}
+.head{margin-bottom:36px}
+.head h2{font-size:clamp(2rem,4vw,3.2rem);margin-top:6px}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;text-align:left;color:var(--ink)}
+.cat.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.cat span{font-size:1.8rem}
+.cat h3{font-size:1.5rem;margin:8px 0 2px}
+.cat small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;margin-top:30px}
+.prod{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:6px}
+.prod .ic{font-size:2rem}
+.prod h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600}
+.prod p{color:var(--muted);font-size:.9rem;flex:1}
+.prod .row{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.add{background:none;border:1px solid var(--green);color:var(--green);border-radius:99px;padding:6px 14px}
+.add:hover{background:var(--green);color:var(--bg)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+.step{border-top:1px solid var(--gold);padding-top:16px}
+.step b{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--gold)}
+.step h3{font-size:1.6rem;margin:4px 0}
+.step p{color:var(--muted);font-size:.95rem}
+footer{padding:50px 5vw;border-top:1px solid var(--line);color:var(--muted);text-align:center;font-size:.9rem}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:.25s;z-index:30}
+.overlay.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);background:var(--bg);z-index:40;transform:translateX(100%);transition:.3s;padding:24px;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.x{background:none;border:0;color:var(--ink);font-size:1.3rem}
+#items{flex:1;overflow:auto}
+.ci{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.ci button{background:none;border:1px solid var(--line);color:var(--ink);width:26px;height:26px;border-radius:50%}
+.total{display:flex;justify-content:space-between;font-weight:700;padding:16px 0}
+.fab{position:fixed;right:20px;bottom:20px;z-index:25;background:var(--gold);color:#1b1208;border:0;border-radius:99px;padding:13px 20px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.chat{position:fixed;right:20px;bottom:20px;z-index:35;width:min(370px,calc(100vw - 40px));height:min(520px,75vh);background:var(--card);border:1px solid var(--line);border-radius:18px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.chat.on{display:flex}
+.ch{background:var(--green);color:var(--bg);padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.ch .x{color:var(--bg)}
+.ch small{display:block;opacity:.8}
+#msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.92rem;white-space:pre-wrap}
+.m.bot{background:var(--bg);border:1px solid var(--line);align-self:flex-start}
+.m.me{background:var(--green);color:var(--bg);align-self:flex-end}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+.chips button{background:none;border:1px solid var(--gold);color:var(--ink);border-radius:99px;padding:4px 12px;font-size:.8rem}
+.inp{display:flex;border-top:1px solid var(--line)}
+.inp input{flex:1;border:0;padding:14px;background:none;color:var(--ink);font:inherit}
+.inp button{border:0;background:none;color:var(--gold);padding:0 16px;font-size:1.2rem}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.navr a{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">AURA LABS</a>
+  <div class="navr">
+    <a href="#products">Collection</a>
+    <a href="#ritual">Ritual</a>
+    <button class="cartbtn" id="openCart" aria-label="Open cart">🛒 <span id="count">0</span></button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div>
+    <span class="tag">✦ India's Finest Skincare</span>
+    <h1>Skin rooted in <em>ancient</em> wisdom</h1>
+    <p>Ayurvedic heritage meets modern biotechnology. Turmeric, saffron, neem — reborn in precision formulas crafted for Indian skin.</p>
+    <a href="#products" class="btn">🌿 Explore Collection</a>
+    <button class="btn ghost" id="askBtn">✦ Ask AURALYZE</button>
+  </div>
+  <div class="imgs">
+    <img src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=500&q=80&fit=crop" alt="Skincare">
+    <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80&fit=crop" alt="Product">
+    <img src="https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=400&q=80&fit=crop" alt="Ritual">
+  </div>
+</header>
+
+<section id="products">
+  <div class="head"><span class="tag">✦ Indian Collection</span><h2>Crafted with <em>Tradition</em></h2></div>
+  <div class="cats" id="cats"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="ritual">
+  <div class="head"><span class="tag">✦ The Practice</span><h2>Your Daily <em>Ritual</em></h2></div>
+  <div class="steps">
+    <div class="step"><b>01</b><h3>Diagnose</h3><p>Chat with AURALYZE. It understands Indian skin concerns — pigmentation, humidity, sun damage and Ayurvedic skin types.</p></div>
+    <div class="step"><b>02</b><h3>Prescribe</h3><p>Receive a bespoke routine with curated product recommendations, layering order and application technique.</p></div>
+    <div class="step"><b>03</b><h3>Apply</h3><p>Follow your ritual. Each formula blends Ayurvedic botanicals with science for results you can feel.</p></div>
+    <div class="step"><b>04</b><h3>Evolve</h3><p>As your skin changes with India's seasons, revisit AURALYZE to refine your protocol and adapt your ritual.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo" style="margin-bottom:8px">AURA LABS</div>
+  © 2026 Aura Labs Skincare India · Powered by AURALYZE AI · All prices in INR
+</footer>
+
+<!-- Cart -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dh"><h2>Your Cart</h2><button class="x" id="closeCart" aria-label="Close cart">✕</button></div>
+  <div id="items"></div>
+  <div class="total"><span>Total</span><span id="total">₹0</span></div>
+  <button class="btn" id="checkout" style="width:100%;margin:0">Checkout</button>
+</aside>
+
+<!-- AURALYZE chat -->
+<button class="fab" id="fab">✦ AURALYZE</button>
+<div class="chat" id="chat" role="dialog" aria-label="AURALYZE assistant">
+  <div class="ch"><div><b>AURALYZE</b><small>✦ AI Skin Intelligence · Online</small></div><button class="x" id="closeChat" aria-label="Close chat">✕</button></div>
+  <div id="msgs"></div>
+  <div class="chips" id="chips"></div>
+  <form class="inp" id="form"><input id="text" placeholder="Describe your skin concern…" autocomplete="off"><button type="submit" aria-label="Send">➤</button></form>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const CATS = [
+  {id:'Serums', icon:'💧'},
+  {id:'Moisturizers', icon:'🌸'},
+  {id:'Treatments', icon:'✨'},
+  {id:'Cleansers', icon:'🌿'}
+];
+const PRODUCTS = [
+  // Serums (6)
+  {id:1,cat:'Serums',name:'Kumkumadi Radiance Serum',desc:'Saffron and sandalwood oil to even tone and restore glow.',price:1899,tags:['pigmentation','dull']},
+  {id:2,cat:'Serums',name:'Vitamin C + Amla Serum',desc:'Stable vitamin C boosted with amla for brightening.',price:1499,tags:['pigmentation','dull','sun']},
+  {id:3,cat:'Serums',name:'Niacinamide + Neem Serum',desc:'Controls oil and visible pores without stripping.',price:1199,tags:['oily','acne']},
+  {id:4,cat:'Serums',name:'Hyaluronic + Rose Serum',desc:'Multi-weight hydration with Damask rose water.',price:1399,tags:['dry','dull']},
+  {id:5,cat:'Serums',name:'Bakuchi Retinol Serum',desc:'Plant-derived retinol alternative for fine lines.',price:2299,tags:['aging']},
+  {id:6,cat:'Serums',name:'Turmeric Spot Serum',desc:'Targets dark spots and post-acne marks.',price:1299,tags:['pigmentation','acne']},
+  // Moisturizers (5)
+  {id:7,cat:'Moisturizers',name:'Saffron Night Cream',desc:'Rich overnight repair with Kashmiri saffron.',price:1799,tags:['dry','aging']},
+  {id:8,cat:'Moisturizers',name:'Aloe Gel Cream',desc:'Oil-free, lightweight gel for humid weather.',price:699,tags:['oily','acne']},
+  {id:9,cat:'Moisturizers',name:'Shea & Ashwagandha Butter',desc:'Deep nourishment for very dry, winter skin.',price:1299,tags:['dry']},
+  {id:10,cat:'Moisturizers',name:'SPF 50 Tulsi Day Cream',desc:'Broad-spectrum protection with a no-white-cast finish.',price:999,tags:['sun','pigmentation']},
+  {id:11,cat:'Moisturizers',name:'Kokum Barrier Cream',desc:'Strengthens a stressed, sensitive skin barrier.',price:1099,tags:['dry','sensitive']},
+  // Treatments (5)
+  {id:12,cat:'Treatments',name:'Multani Mitti Clay Mask',desc:'Weekly detox mask that absorbs excess sebum.',price:799,tags:['oily','acne']},
+  {id:13,cat:'Treatments',name:'Saffron Gold Peel',desc:'Gentle lactic acid exfoliation for a brighter look.',price:1599,tags:['dull','pigmentation']},
+  {id:14,cat:'Treatments',name:'Neem Spot Corrector',desc:'Overnight patch-free gel for active blemishes.',price:599,tags:['acne']},
+  {id:15,cat:'Treatments',name:'Under-Eye Brightening Balm',desc:'Caffeine and almond for tired, dark eyes.',price:1199,tags:['aging','dull']},
+  {id:16,cat:'Treatments',name:'Sandalwood Sheet Mask (Set of 5)',desc:'Cooling, calming hydration after sun.',price:899,tags:['sun','dry']},
+  // Cleansers (5)
+  {id:17,cat:'Cleansers',name:'Neem & Tulsi Face Wash',desc:'Purifying foam cleanser for oily, acne-prone skin.',price:499,tags:['oily','acne']},
+  {id:18,cat:'Cleansers',name:'Milk & Honey Cleansing Balm',desc:'Melts sunscreen and makeup, leaves skin soft.',price:899,tags:['dry','sun']},
+  {id:19,cat:'Cleansers',name:'Rose Water Micellar Wash',desc:'Fragrance-light cleanser for sensitive skin.',price:599,tags:['sensitive','dry']},
+  {id:20,cat:'Cleansers',name:'Besan Haldi Exfoliating Scrub',desc:'Traditional gram flour scrub, modernised.',price:549,tags:['dull','pigmentation']},
+  {id:21,cat:'Cleansers',name:'Charcoal Vetiver Gel Cleanser',desc:'Deep-cleans pores in hot, humid climates.',price:649,tags:['oily']}
+];
+const ICONS = {Serums:'💧',Moisturizers:'🌸',Treatments:'✨',Cleansers:'🌿'};
+const inr = n => '₹' + n.toLocaleString('en-IN');
+const $ = id => document.getElementById(id);
+
+/* ---------- PRODUCTS ---------- */
+let activeCat = null;
+function renderCats(){
+  $('cats').innerHTML = CATS.map(c=>{
+    const n = PRODUCTS.filter(p=>p.cat===c.id).length;
+    return `<button class="cat ${activeCat===c.id?'on':''}" data-cat="${c.id}"><span>${c.icon}</span><h3>${c.id}</h3><small>${n} Products</small></button>`;
+  }).join('');
+}
+function renderGrid(){
+  const list = activeCat ? PRODUCTS.filter(p=>p.cat===activeCat) : PRODUCTS;
+  $('grid').innerHTML = list.map(p=>`
+    <article class="prod">
+      <div class="ic">${ICONS[p.cat]}</div>
+      <h4>${p.name}</h4><p>${p.desc}</p>
+      <div class="row"><b>${inr(p.price)}</b><button class="add" data-add="${p.id}">Add</button></div>
+    </article>`).join('');
+}
+$('cats').addEventListener('click',e=>{
+  const b = e.target.closest('[data-cat]'); if(!b) return;
+  activeCat = activeCat===b.dataset.cat ? null : b.dataset.cat;
+  renderCats(); renderGrid();
+});
+$('grid').addEventListener('click',e=>{
+  const b = e.target.closest('[data-add]'); if(b) addToCart(+b.dataset.add);
+});
+
+/* ---------- CART ---------- */
+let cart = {}; // id -> qty
+try{ cart = JSON.parse(localStorage.getItem('aura-cart')||'{}'); }catch(e){}
+function save(){ try{ localStorage.setItem('aura-cart', JSON.stringify(cart)); }catch(e){} }
+function addToCart(id){ cart[id]=(cart[id]||0)+1; save(); renderCart(); openCart(); }
+function changeQty(id,d){ cart[id]=(cart[id]||0)+d; if(cart[id]<=0) delete cart[id]; save(); renderCart(); }
+function renderCart(){
+  const ids = Object.keys(cart);
+  let total = 0, count = 0;
+  $('items').innerHTML = ids.length ? ids.map(id=>{
+    const p = PRODUCTS.find(x=>x.id==id); const q = cart[id];
+    total += p.price*q; count += q;
+    return `<div class="ci"><div><b>${p.name}</b><br><small>${inr(p.price)}</small></div>
+      <div><button data-q="${id}" data-d="-1" aria-label="Decrease">−</button> ${q} <button data-q="${id}" data-d="1" aria-label="Increase">+</button></div></div>`;
+  }).join('') : '<p style="color:var(--muted)">Your cart is empty. Add a product from the collection.</p>';
+  $('total').textContent = inr(total);
+  $('count').textContent = count;
+}
+$('items').addEventListener('click',e=>{
+  const b = e.target.closest('[data-q]'); if(b) changeQty(+b.dataset.q, +b.dataset.d);
+});
+function openCart(){ $('drawer').classList.add('on'); $('overlay').classList.add('on'); }
+function closeCart(){ $('drawer').classList.remove('on'); $('overlay').classList.remove('on'); }
+$('openCart').onclick = openCart; $('closeCart').onclick = closeCart; $('overlay').onclick = closeCart;
+$('checkout').onclick = ()=>{
+  if(!Object.keys(cart).length) return alert('Your cart is empty.');
+  alert('Demo checkout: connect a payment gateway such as Razorpay here.');
+};
+
+/* ---------- AURALYZE (rule-based skin assistant) ---------- */
+const RULES = [
+  {k:['oily','acne','pimple','breakout'], tag:'oily', title:'Oily & acne-prone skin',
+   tip:'Keep it light and balanced. Cleanse twice daily, use a niacinamide serum in the morning, and a gel moisturizer. Never skip sunscreen.'},
+  {k:['pigment','dark spot','tan','melasma','uneven'], tag:'pigmentation', title:'Pigmentation',
+   tip:'Brighten gently and protect strictly. Vitamin C in the morning, a spot serum at night, and SPF 50 every day — sun is the main trigger.'},
+  {k:['dry','dull','flaky','tight'], tag:'dry', title:'Dry & dull skin',
+   tip:'Add hydration in layers: a creamy cleanser, hyaluronic serum on damp skin, then a rich moisturizer to lock it in.'},
+  {k:['aging','anti','wrinkle','fine line','ageing'], tag:'aging', title:'Anti-aging',
+   tip:'Use a retinol alternative at night, 3 nights a week at first. Add an eye balm and a nourishing night cream.'},
+  {k:['sun','sunburn','sunscreen','spf'], tag:'sun', title:'Sun damage',
+   tip:'Reapply SPF every 2–3 hours outdoors. After sun, calm skin with a cooling mask and barrier cream.'},
+  {k:['sensitive','redness','irritat','rash'], tag:'sensitive', title:'Sensitive skin',
+   tip:'Keep the routine short and fragrance-light. Introduce one new product at a time and patch test first.'}
+];
+const msgs = $('msgs');
+function say(text, who){
+  const d = document.createElement('div'); d.className = 'm ' + who; d.textContent = text;
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d;
+}
+function recommend(tag){
+  const picks = PRODUCTS.filter(p=>p.tags.includes(tag)).slice(0,4);
+  return picks.map(p=>`• ${p.name} (${inr(p.price)})`).join('\n');
+}
+function reply(input){
+  const t = input.toLowerCase();
+  const rule = RULES.find(r=>r.k.some(w=>t.includes(w)));
+  if(rule){
+    return `${rule.title}\n\n${rule.tip}\n\nSuggested products:\n${recommend(rule.tag)}\n\nTip: tap Add on any product in the Collection.`;
+  }
+  if(/hi|hello|hey/.test(t)) return 'Hello! Tell me your main skin concern — oily, pigmentation, dry, anti-aging, sun damage or sensitivity — and I will build a routine.';
+  return 'I can help with oily & acne, pigmentation, dry & dull skin, anti-aging, sun damage and sensitive skin. Which one is closest to your concern?';
+}
+function send(text){
+  if(!text.trim()) return;
+  say(text,'me');
+  const typing = say('…','bot');
+  setTimeout(()=>{ typing.textContent = reply(text); msgs.scrollTop = msgs.scrollHeight; }, 500);
+}
+const CHIPS = ['Oily & acne','Pigmentation','Dry & dull','Anti-aging'];
+$('chips').innerHTML = CHIPS.map(c=>`<button type="button">${c}</button>`).join('');
+$('chips').onclick = e=>{ if(e.target.tagName==='BUTTON') send(e.target.textContent); };
+$('form').onsubmit = e=>{ e.preventDefault(); send($('text').value); $('text').value=''; };
+let greeted = false;
+function openChat(){
+  $('chat').classList.add('on'); $('fab').style.display='none';
+  if(!greeted){ greeted = true; say('Namaste! I am AURALYZE, your skin intelligence guide. What is your main skin concern?','bot'); }
+  $('text').focus();
+}
+function closeChat(){ $('chat').classList.remove('on'); $('fab').style.display=''; }
+$('fab').onclick = openChat; $('askBtn').onclick = openChat; $('closeChat').onclick = closeChat;
+
+/* ---------- INIT ---------- */
+renderCats(); renderGrid(); renderCart();
+</script>
+</body>
+</html>
